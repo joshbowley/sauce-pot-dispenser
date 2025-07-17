@@ -4,7 +4,7 @@
 
 int stepsPerRevolution=2048;
 
-int motSpeed=2; //rpm
+int motSpeed=10; //rpm
 
 Stepper myStepper(stepsPerRevolution,8,10,9,11);
 

@@ -1,4 +1,4 @@
-//fluid regulator prototype 1
+//fluid regulator final prototype
 
 #include <Stepper.h>
 
@@ -8,7 +8,7 @@ int motSpeed=2; //rpm
 
 Stepper myStepper(stepsPerRevolution,8,10,9,11);
 
-int dt=500;
+int dt=2500;
 
 int baud=9600;
 
