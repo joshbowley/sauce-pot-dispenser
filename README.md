@@ -20,7 +20,7 @@ An Arduino-based **smart sauce pot dispenser** that adjusts sauce flow and stirr
 
 - Arduino IDE (C++ based)
 - Modular `.ino` file structure
-- Uses standard Arduino libraries and servo/stepper control libraries
+- Uses standard Arduino libraries and stepper control libraries
 
 ## Project Goals
 
