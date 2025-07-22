@@ -20,8 +20,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  myStepper.step(-stepsPerRevolution/2);
-  delay(dt);
   myStepper.step(stepsPerRevolution/2);
   delay(dt);
+ 
 }
