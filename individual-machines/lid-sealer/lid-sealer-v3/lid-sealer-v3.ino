@@ -1,10 +1,10 @@
 #include <AccelStepper.h>
 
 //M5
-AccelStepper M5(AccelStepper::FULL4WIRE, 11, 10, 9, 8);
+AccelStepper M5(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
 
 //M6
-AccelStepper M6(AccelStepper::FULL4WIRE, 6, 5, 4, 3);
+AccelStepper M6(AccelStepper::FULL4WIRE, 3, 5, 4, 6);
 
 //define variables for 28BJ-48 motors: 
 const int stepsPerRevolution = 2048;

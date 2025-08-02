@@ -6,7 +6,7 @@
 #include <AccelStepper.h>
 
 //create a stepper object - labelled M1
-AccelStepper M1(AccelStepper::FULL4WIRE, 8,9,10,11);
+AccelStepper M1(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
 
 const int stepsPerRevolution = 2048;  //for 28BYJ-48
 const float rpm = 5.0;
