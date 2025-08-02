@@ -5,10 +5,10 @@
 //create two Accel stepper objects - labelled M5 and M6: 
 
 //M5
-AccelStepper M5(AccelStepper::FULL4WIRE, 8, 9, 10, 11);
+AccelStepper M5(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
 
 //M6
-AccelStepper M6(AccelStepper::FULL4WIRE, 3, 4, 5, 6);
+AccelStepper M6(AccelStepper::FULL4WIRE, 3, 5, 4, 6);
 
 //define variables for 28BJ-48 motors: 
 const int stepsPerRevolution = 2048;
@@ -40,21 +40,21 @@ void moveMotor(AccelStepper & motor, int steps) {
 //loop running movement logic
 void loop() {
   //up half
-  moveMotor(M5, -stepsPerRevolution / 4);
+  moveMotor(M5, 9* -stepsPerRevolution / 4);
   //up half
   moveMotor(M6, stepsPerRevolution / 4);
   //down half
-  moveMotor(M5, stepsPerRevolution / 4);
+  moveMotor(M5, 9* stepsPerRevolution / 4);
   //up half
   moveMotor(M6, stepsPerRevolution / 4);
   //up half
-  moveMotor(M5, -stepsPerRevolution / 4);
+  moveMotor(M5, 9 * -stepsPerRevolution / 4);
   //down full
   moveMotor(M6, -stepsPerRevolution / 2);
   //up half
-  moveMotor(M5, -stepsPerRevolution / 4);
+  moveMotor(M5, 9* -stepsPerRevolution / 4);
   //down full
-  moveMotor(M5, stepsPerRevolution / 2);
+  moveMotor(M5, 9*stepsPerRevolution / 2);
 
   delay(dt);
 }

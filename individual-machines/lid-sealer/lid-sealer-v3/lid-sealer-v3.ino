@@ -1,13 +1,14 @@
 #include <AccelStepper.h>
 
 //M5
-AccelStepper M5(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
+AccelStepper M6(AccelStepper::FULL4WIRE, 8, 10, 9, 11);
 
 //M6
-AccelStepper M6(AccelStepper::FULL4WIRE, 3, 5, 4, 6);
+AccelStepper M5(AccelStepper::FULL4WIRE, 3, 5, 4, 6);
 
 //define variables for 28BJ-48 motors: 
 const int stepsPerRevolution = 2048;
+const int stepsM5 = stepsPerRevolution * 9; //M5 is connected to a gear ratio of 9:1
 const float rpm = 5.0; 
 const float motSpeed = rpm * stepsPerRevolution / 60.0; //steps per second
 const float motAccel = 100.0; //steps per sec^2
@@ -17,12 +18,12 @@ const int dt = 1000; //delay time between moves (ms)
 int moveSequence[][2] = {
   {-stepsPerRevolution / 4,  0},     // M5 up half
   { 0,  stepsPerRevolution / 4},     // M6 up half
-  { stepsPerRevolution / 4,  0},     // M5 down half
+  { stepsM5 / 4,  0},     // M5 down half
   { 0,  stepsPerRevolution / 4},     // M6 up half
-  {-stepsPerRevolution / 4,  0},     // M5 up half
+  {-stepsM5 / 4,  0},     // M5 up half
   { 0, -stepsPerRevolution / 2},     // M6 down full
-  {-stepsPerRevolution / 4,  0},     // M5 up half
-  { stepsPerRevolution / 2,  0},     // M5 down full
+  {-stepsM5 / 4,  0},     // M5 up half
+  { stepsM5 / 2,  0},     // M5 down full
 };
 
 int stepIndex = 0;
