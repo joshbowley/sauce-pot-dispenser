@@ -12,7 +12,7 @@ const int stepsPerRevolution = 2048;  //for 28BYJ-48
 const float rpm = 5.0;
 const float motSpeed = rpm * stepsPerRevolution / 60.0; //steps per second
 const float motAccel = 100.0;  //steps per sec²
-const int dt = 2000;  //delay time between moves (ms)
+const int dt = 500;  //delay time between moves (ms)
 
 
 void setup() {
