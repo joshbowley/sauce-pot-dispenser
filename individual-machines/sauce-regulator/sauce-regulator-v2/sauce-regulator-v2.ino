@@ -1,4 +1,4 @@
-//fluid regulator final prototype
+//fluid regulator v2 prototype
 
 #include <Stepper.h>
 
