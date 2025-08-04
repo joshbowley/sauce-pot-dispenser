@@ -24,17 +24,17 @@
 
 
 //M7, M8 & M9: stepper objects
-AccelStepper M7(AccelStepper::FULL4WIRE, M7_IN1, M7_IN2, M7_IN3, M7_IN4);
-AccelStepper M8(AccelStepper::FULL4WIRE, M8_IN1, M8_IN2, M8_IN3, M8_IN4);
-AccelStepper M9(AccelStepper::FULL4WIRE, M9_IN1, M9_IN2, M9_IN3, M9_IN4);
+AccelStepper M7(AccelStepper::FULL4WIRE, M7_IN1, M7_IN3, M7_IN2, M7_IN4);
+AccelStepper M8(AccelStepper::FULL4WIRE, M8_IN1, M8_IN3, M8_IN2, M8_IN4);
+AccelStepper M9(AccelStepper::FULL4WIRE, M9_IN1, M9_IN3, M9_IN2, M9_IN4);
 
 
 //motor parameters setup
 const int stepsPerRevolution = 2048;
 const int stepsM9            = stepsPerRevolution * 4;           // M9 is attached to gear ratio of 4:1
-const float rpm              = 5.0;                              // revolutions/minute
+const float rpm              = 2.0;                              // revolutions/minute
 const float motSpeed         = rpm * stepsPerRevolution / 60.0;  // steps/sec
-const float motAccel         = 100.0;                            // steps/sec²
+const float motAccel         = 50.0;                            // steps/sec²
 const int dt                 = 1000;                             // ms between cycles
  
 
@@ -42,17 +42,18 @@ const int dt                 = 1000;                             // ms between c
 struct moveStep {
   AccelStepper* motor; 
   int steps;
+  const char* name; //label for serial printing (debugging)
 };
 
 
 //movement sequence (signed for direction)
 moveStep moveSequence[] = {
-  { &M8, -stepsPerRevolution / 4 },   // M8: lower claws CCW
-  { &M7, -stepsPerRevolution / 16 },   // M7: close claws CW
-  { &M8,  stepsPerRevolution / 4 },   // M8: raise claws 
-  { &M9,  stepsM9 / 2 },              // M9: rotate box CW
-  { &M7,  stepsPerRevolution / 8 },   // M7: open claws
-  { &M9, -stepsM9 / 2 }               // M9: rotate back CCW
+  { &M8, -stepsPerRevolution / 4, "M8" },    // M8: lower claws CCW
+  { &M7, -stepsPerRevolution / 16, "M7" },   // M7: close claws CW
+  { &M8,  stepsPerRevolution / 4, "M8" },    // M8: raise claws 
+  { &M9,  stepsM9 / 2, "M9" },               // M9: rotate box CW
+  { &M7,  stepsPerRevolution / 8, "M7" },    // M7: open claws
+  { &M9, -stepsM9 / 2, "M9" }                // M9: rotate back CCW
 };
 
 
@@ -100,8 +101,8 @@ void loop() {
     motor->moveTo(motor->currentPosition() + steps);
     stepStarted = true;
     Serial.print("Step "); Serial.print(stepIndex);
-    Serial.print(": Motor → "); Serial.print((uintptr_t)motor);
-    Serial.print(" | Steps → "); Serial.println(steps);
+    Serial.print(": Motor "); Serial.print(moveSequence[stepIndex].name);
+    Serial.print(" → Steps "); Serial.println(steps);
   }
 
   //run motor
