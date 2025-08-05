@@ -46,7 +46,7 @@ const int stepsPerRevolution = 2048;
 const int stepsM8 = stepsPerRevolution * 4;           //m8 gear ratio 4:1
 const int stepsM9 = stepsPerRevolution * 4;           //m9 gear ratio 4:1
 
-const float rpm = 2.0;                                //revolutions/minute
+const float rpm = 5.0;                                //revolutions/minute
 const float motSpeed = rpm * stepsPerRevolution / 60.0;
 const float motAccel = 50.0;                          //steps/sec²
 
