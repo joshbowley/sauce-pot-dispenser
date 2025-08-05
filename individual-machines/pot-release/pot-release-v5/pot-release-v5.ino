@@ -63,10 +63,10 @@ struct moveStep {
 
 moveStep moveSequence[] = {
   { &M8, -stepsPerRevolution / 4, "M8" },    //lower claws
-  { &M7, -stepsPerRevolution / 16, "M7" },   //close claws
+  { &M7, stepsPerRevolution / 16, "M7" },   //close claws
   { &M8,  stepsPerRevolution / 4, "M8" },    //raise claws
   { &M9,  stepsM9 / 2, "M9" },               //rotate box cw
-  { &M7,  stepsPerRevolution / 8, "M7" },    //open claws
+  { &M7,  -stepsPerRevolution / 8, "M7" },    //open claws
   { &M9, -stepsM9 / 2, "M9" }                //rotate box ccw
 };
 
