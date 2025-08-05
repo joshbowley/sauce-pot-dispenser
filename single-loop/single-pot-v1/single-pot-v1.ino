@@ -70,13 +70,211 @@
 #define M9_IN4  46
 
 //======================================================
+//CREATE STEPPER OBJECTS: 
 
-void setup() {
-  // put your setup code here, to run once:
+AccelStepper M1(AccelStepper::FULL4WIRE, M1_IN1, M1_IN3, M1_IN2, M1_IN4);
+AccelStepper M2(AccelStepper::FULL4WIRE, M2_IN1, M2_IN3, M2_IN2, M2_IN4);
+AccelStepper M3(AccelStepper::FULL4WIRE, M3_IN1, M3_IN3, M3_IN2, M3_IN4);
+AccelStepper M4(AccelStepper::FULL4WIRE, M4_IN1, M4_IN3, M4_IN2, M4_IN4);
+AccelStepper M5(AccelStepper::FULL4WIRE, M5_IN1, M5_IN3, M5_IN2, M5_IN4);
+AccelStepper M6(AccelStepper::FULL4WIRE, M6_IN1, M6_IN3, M6_IN2, M6_IN4);
 
+//=====================================================
+//MOTOR SETTINGS:
+
+//steps
+const int stepsPerRevolution = 2048;
+const int stepsM6 = stepsPerRevolution * 9;  // gear 9:1
+
+//movement settings
+const float rpm = 5.0;
+const float motSpeed = rpm * stepsPerRevolution / 60.0;
+const float motAccel = 100.0;
+
+//wait time between steps
+const int stepDelay = 1000;  // ms between steps
+
+//=========================================================
+//MACHINE STATE CONTROLLER:
+
+//numbered states
+enum StepState {
+  IDLE,
+  CUP_DISPENSE,
+  CONVEYOR1,
+  SAUCE_DISPENSE,
+  CONVEYOR2,
+  LID_SEAL,
+  CONVEYOR3,
+  POT_RELEASE,
+  DONE
+};
+
+StepState currentState = CUP_DISPENSE;
+bool stepStarted = false;
+unsigned long lastStepTime = 0;
+
+//=======================================
+//SETUP: 
+
+//motor setup function to simplify
+void setupMotor(AccelStepper& motor) {
+  motor.setMaxSpeed(motSpeed);
+  motor.setAcceleration(motAccel);
+  motor.setCurrentPosition(0);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+//setup  
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Single Pot Filler Starting...");
 
+  setupMotor(M1);
+  setupMotor(M2);
+  setupMotor(M3);
+  setupMotor(M4);
+  setupMotor(M5);
+  setupMotor(M6);
+}
+
+//=============================================================================================
+//MAIN LOOP:
+
+void loop() {
+  switch (currentState) {
+
+    case CUP_DISPENSE:
+      if (!stepStarted) {
+        M1.moveTo(M1.currentPosition() - stepsPerRevolution);
+        stepStarted = true;
+        Serial.println("CUP_DISPENSE");
+      }
+      M1.run();
+      if (stepStarted && M1.distanceToGo() == 0) {
+        stepStarted = false;
+        currentState = CONVEYOR1;
+        lastStepTime = millis();
+      }
+      break;
+
+    case CONVEYOR1:
+      if (!stepStarted) {
+        M2.moveTo(M2.currentPosition() + stepsPerRevolution);
+        stepStarted = true;
+        Serial.println("CONVEYOR1");
+      }
+      M2.run();
+      if (stepStarted && M2.distanceToGo() == 0) {
+        stepStarted = false;
+        currentState = SAUCE_DISPENSE;
+        lastStepTime = millis();
+      }
+      break;
+
+    case SAUCE_DISPENSE:
+      if (!stepStarted) {
+        M3.moveTo(M3.currentPosition() + stepsPerRevolution);
+        M4.moveTo(M4.currentPosition() - stepsPerRevolution);
+        stepStarted = true;
+        Serial.println("SAUCE_DISPENSE");
+      }
+      M3.run();
+      M4.run();
+      if (stepStarted && M3.distanceToGo() == 0 && M4.distanceToGo() == 0) {
+        stepStarted = false;
+        currentState = CONVEYOR2;
+        lastStepTime = millis();
+      }
+      break;
+
+    case CONVEYOR2:
+      if (!stepStarted) {
+        M2.moveTo(M2.currentPosition() + stepsPerRevolution);
+        stepStarted = true;
+        Serial.println("CONVEYOR2");
+      }
+      M2.run();
+      if (stepStarted && M2.distanceToGo() == 0) {
+        stepStarted = false;
+        currentState = LID_SEAL;
+        lastStepTime = millis();
+      }
+      break;
+
+    case LID_SEAL:
+      static int lidStep = 0;
+      static bool lidStepStarted = false;
+
+      if (!lidStepStarted) {
+        switch (lidStep) {
+          case 0: M6.moveTo(M6.currentPosition() + stepsM6 / 4); break;
+          case 1: M5.moveTo(M5.currentPosition() + stepsPerRevolution / 4); break;
+          case 2: M6.moveTo(M6.currentPosition() - stepsM6 / 4); break;
+          case 3: M5.moveTo(M5.currentPosition() + stepsPerRevolution / 4); break;
+          case 4: M6.moveTo(M6.currentPosition() + stepsM6 / 4); break;
+          case 5: M5.moveTo(M5.currentPosition() - stepsPerRevolution / 2); break;
+          case 6: M6.moveTo(M6.currentPosition() + stepsM6 / 4); break;
+          case 7: M6.moveTo(M6.currentPosition() - stepsM6 / 2); break;
+        }
+        lidStepStarted = true;
+        Serial.print("LID_SEAL STEP "); Serial.println(lidStep);
+      }
+
+      M5.run();
+      M6.run();
+
+      bool M5Done = M5.distanceToGo() == 0;
+      bool M6Done = M6.distanceToGo() == 0;
+
+      if (lidStepStarted && M5Done && M6Done) {
+        lidStep++;
+        lidStepStarted = false;
+        delay(stepDelay);
+      }
+
+      if (lidStep >= 8) {
+        lidStep = 0;
+        currentState = CONVEYOR3;
+        stepStarted = false;
+        lastStepTime = millis();
+      }
+      break;
+
+    case CONVEYOR3:
+      if (!stepStarted) {
+        M2.moveTo(M2.currentPosition() + stepsPerRevolution);
+        stepStarted = true;
+        Serial.println("CONVEYOR3");
+      }
+      M2.run();
+      if (stepStarted && M2.distanceToGo() == 0) {
+        stepStarted = false;
+        currentState = POT_RELEASE;
+        lastStepTime = millis();
+      }
+      break;
+
+    case POT_RELEASE:
+      if (!stepStarted) {
+        M1.moveTo(M1.currentPosition() - stepsPerRevolution);
+        stepStarted = true;
+        Serial.println("POT_RELEASE");
+      }
+      M1.run();
+      if (stepStarted && M1.distanceToGo() == 0) {
+        stepStarted = false;
+        currentState = DONE;
+        lastStepTime = millis();
+      }
+      break;
+
+    case DONE:
+      Serial.println("POT CYCLE COMPLETE");
+      delay(5000);  // Optional delay before next cycle
+      currentState = CUP_DISPENSE;
+      break;
+
+    default:
+      break;
+  }
 }
