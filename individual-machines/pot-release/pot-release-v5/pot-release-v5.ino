@@ -64,10 +64,10 @@ struct moveStep {
 moveStep moveSequence[] = {
   { &M8, -stepsPerRevolution / 4, "M8" },    //lower claws
   { &M7, stepsPerRevolution / 16, "M7" },   //close claws
-  { &M8,  stepsPerRevolution / 4, "M8" },    //raise claws
-  { &M9,  stepsM9 / 2, "M9" },               //rotate box cw
+  { &M8,  stepsM8 * 10, "M8" },    //raise claws
+  { &M9,  stepsM9 / 4, "M9" },               //rotate box cw
   { &M7,  -stepsPerRevolution / 8, "M7" },    //open claws
-  { &M9, -stepsM9 / 2, "M9" }                //rotate box ccw
+  { &M9, -stepsM9 / 4, "M9" }                //rotate box ccw
 };
 
 const int numSteps = sizeof(moveSequence) / sizeof(moveSequence[0]);
