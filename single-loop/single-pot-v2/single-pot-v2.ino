@@ -287,6 +287,7 @@ void loop() {
 
       bool M5Done = M5.distanceToGo() == 0;
       bool M6Done = M6.distanceToGo() == 0;
+      
 
       if (lidStepStarted && M5Done && M6Done) {
         lidStep++;
