@@ -6,22 +6,22 @@ int motSpeed=2; //rpm
 
 
 //M7 pins (claws open/close)
-#define M7_IN1  5
-#define M7_IN2  4
-#define M7_IN3  3
-#define M7_IN4  2
+#define M7_IN1  28
+#define M7_IN2  30
+#define M7_IN3  32
+#define M7_IN4  34
 
 //M8 pins (claws lower/raise)
-#define M8_IN1  9
-#define M8_IN2  8
-#define M8_IN3  7
-#define M8_IN4  6
+#define M8_IN1  44
+#define M8_IN2  42
+#define M8_IN3  40
+#define M8_IN4  38
 
 //M9 pins (box turn)
-#define M9_IN1  13
-#define M9_IN2  12
-#define M9_IN3  11
-#define M9_IN4  10
+#define M9_IN1  52
+#define M9_IN2  50
+#define M9_IN3  48
+#define M9_IN4  46
 
 
 //M7, M8 & M9: stepper objects
@@ -41,5 +41,5 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  M8.step(stepsPerRevolution);
+  M9.step(-stepsPerRevolution);
 }
