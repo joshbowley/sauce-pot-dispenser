@@ -123,9 +123,7 @@ void loop() {
 
   //run motors
   motor->run();
-  if (motor == &M8) {
-    M10.run();
-  }
+  M10.run();  // <- ALWAYS RUN M10, even if not commanded
 
   //check complete
   bool stepComplete = motor->distanceToGo() == 0;
