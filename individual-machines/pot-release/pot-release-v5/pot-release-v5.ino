@@ -1,4 +1,4 @@
-//pot release – standalone v2 (M10 sync with M8)
+//pot release – v5 (M10 same direction as M8)
 
 //=====================================================
 //INCLUDES:
@@ -62,12 +62,12 @@ struct moveStep {
 };
 
 moveStep moveSequence[] = {
-  { &M8, -stepsPerRevolution / 4, "M8" },    //lower claws
-  { &M7, stepsPerRevolution / 16, "M7" },   //close claws
-  { &M8,  stepsM8 * 10, "M8" },    //raise claws
-  { &M9,  stepsM9 / 4, "M9" },               //rotate box cw
-  { &M7,  -stepsPerRevolution / 8, "M7" },    //open claws
-  { &M9, -stepsM9 / 4, "M9" }                //rotate box ccw
+  { &M8, -stepsPerRevolution / 4, "M8" },             //lower claws
+  { &M7,  stepsPerRevolution / 16, "M7" },            //close claws
+  { &M8,  stepsM8 * 10, "M8" },                       //raise claws
+  { &M9,  stepsM9 / 4, "M9" },                        //rotate box cw
+  { &M7, -stepsPerRevolution / 8, "M7" },             //open claws
+  { &M9, -stepsM9 / 4, "M9" }                         //rotate box ccw
 };
 
 const int numSteps = sizeof(moveSequence) / sizeof(moveSequence[0]);
@@ -94,7 +94,7 @@ void setup() {
   setupStepper(M7);
   setupStepper(M8);
   setupStepper(M9);
-  setupStepper(M10);  // added M10 setup
+  setupStepper(M10);  // m10 setup
 }
 
 //=====================================================
@@ -110,9 +110,9 @@ void loop() {
   if (!stepStarted) {
     motor->moveTo(motor->currentPosition() + steps);
 
-    //sync M10 with M8 (opposite direction)
+    //sync M10 with M8 (same direction)
     if (motor == &M8) {
-      M10.moveTo(M10.currentPosition() - steps);
+      M10.moveTo(M10.currentPosition() + steps);
     }
 
     stepStarted = true;
@@ -123,7 +123,7 @@ void loop() {
 
   //run motors
   motor->run();
-  M10.run();  // <- ALWAYS RUN M10, even if not commanded
+  M10.run();  // always run M10 to ensure stepping continues
 
   //check complete
   bool stepComplete = motor->distanceToGo() == 0;
