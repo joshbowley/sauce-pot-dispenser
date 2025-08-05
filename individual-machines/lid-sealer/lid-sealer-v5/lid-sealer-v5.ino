@@ -1,4 +1,4 @@
-// lid sealer v6 – diagnostic + sequential movement for M5 & M6
+// lid sealer v5 – diagnostic + sequential movement for M5 & M6
 
 #include <AccelStepper.h>
 
