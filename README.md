@@ -1,4 +1,4 @@
-# 🥫 Sauce Pot Dispenser – Arduino Control System (v3)
+# 🥫 Sauce Pot Dispenser – Arduino Control System
 
 This repository contains the full embedded control code for a **multi-stepper motor sauce pot dispenser**, developed as part of my **Arthur Clements Engineering Scholarship** project in summer 2025.
 
