@@ -54,25 +54,13 @@ Each stage is non-blocking and uses real-time motor updates through `motor.run()
 - **Arduino Mega 2560** (recommended for pin count)
 - **AccelStepper Library** (install via Arduino Library Manager)
 - **External motor power supply** (for reliable torque)
-- 10x 28BYJ-48 or NEMA 17 stepper motors with ULN2003 or A4988 drivers
+- 10x 28BYJ-48 stepper motors with ULN2003 or A4988 drivers
 
 ---
 
 ## 📁 File Contents
 
-- `sauce_dispenser_v3.ino` — Full control code (as seen in this repository)
-
----
-
-## ▶️ Getting Started
-
-1. Clone this repository
-2. Open the `.ino` file in **Arduino IDE**
-3. Install the **AccelStepper** library if you haven’t already
-4. Upload to your board and open **Serial Monitor** (9600 baud)
-5. Power up external motor drivers and run
-
----
+- `sauce_dispenser_v3.ino` — Full control code (as seen in this 
 
 ## 📸 Media (Coming Soon)
 
