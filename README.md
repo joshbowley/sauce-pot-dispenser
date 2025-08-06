@@ -75,7 +75,7 @@ Each stage is non-blocking and uses real-time motor updates through `motor.run()
 **Josh Bowley**  
 Physics Undergraduate, University of Exeter  
 Arthur Clements Engineering Scholar, Summer 2025  
-Collaborator: [Josh Rafnson-Hall](https://www.linkedin.com/in/josh-rafnson-hall)
+Collaborator: [Josh Rafnson-Hall](https://www.linkedin.com/in/joshua-rafnson-hall-974ba2323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
 
 ---
 
