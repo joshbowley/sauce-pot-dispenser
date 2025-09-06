@@ -1,72 +1,77 @@
 # 🥫 Sauce Pot Dispenser – Arduino Control System
 
-This repository contains the full embedded control code for a **multi-stepper motor sauce pot dispenser**, developed as part of my **Arthur Clements Engineering Scholarship** project in summer 2025.
+This repository contains the **full Arduino control code** for a **multi-stepper motor sauce pot dispenser**, developed as part of the **Arthur Clements Engineering Scholarship** project in Summer 2025.
 
-The system was designed to **automate the preparation of free sauce pots**, a key offering at **Knowle Fish and Chip Shop**, where they’re currently filled by hand. The shop operates with the same staffing levels regardless of whether pots are being filled, so automating this task can free up a staff member for front-of-house service — speeding up customer flow during peak hours without increasing cost.
+The system was designed to **automate the preparation of free sauce pots** at **Knowle Fish and Chip Shop**, which were previously filled manually. Automating this process reduces staff workload during peak hours, improves customer service efficiency, and maintains consistent portion control.
 
 ---
 
 ## 🔧 System Overview
 
-The full system coordinates **10 stepper motors** (M1–M10), each assigned to a different stage of the pot preparation and delivery process:
+The machine coordinates **10 stepper motors** (M1–M10), each handling a specific stage of pot preparation and delivery:
 
 | Motor | Function                           |
 |-------|------------------------------------|
 | M1    | Cup Dispenser                      |
 | M2    | Conveyor Belt (3 stages)           |
-| M3–M4 | Sauce Dispenser (fill and retract) |
-| M5–M6 | Lid Sealer (vertical + rotary)     |
+| M3–M4 | Sauce Dispenser (fill & retract)  |
+| M5    | Lid Sealer (vertical press)        |
+| M6    | Lid Sealer (rotation)              |
 | M7    | Pot Release Claws (open/close)     |
 | M8    | Pot Release Claws (lift/lower)     |
 | M9    | Release Box Rotation               |
-| M10   | Pot Release (mirrors M8 for torque)|
+| M10   | Pot Release Claws (sync with M8)   |
+
+The system uses **C++ on an Arduino Mega** with the **AccelStepper library** for precise, non-blocking motor control.
 
 ---
 
 ## 🧠 Key Features
 
-- **C++ on Arduino Mega**
-- **AccelStepper** library for smooth, non-blocking motor control
-- Modular **state machine architecture** to control the machine sequence
-- Multi-motor coordination (especially M8 & M10 for torque-matched lifting)
-- Serial debug output for live monitoring
-- Custom motion sequences and timing control
+- **Modular state machine architecture** for clear, maintainable sequencing
+- **Real-time motor coordination**, including torque-matched lifting for pot release (M8 & M10)
+- **Serial debug output** for monitoring every step
+- **Customizable motion sequences** with adjustable timing
+- Supports **10 stepper motors** with independent control
 
 ---
 
 ## 🚦 Machine Sequence
 
-1. **CUP_DISPENSE** – Dispenses pot
-2. **CONVEYOR1** – Moves cup to filling station
-3. **SAUCE_DISPENSE** – Dispenses sauce
-4. **CONVEYOR2** – Moves to lid sealing station
-5. **LID_SEAL** – Applies lid using vertical press + rotation
-6. **CONVEYOR3** – Final conveyor movement
-7. **POT_RELEASE** – Lifts, rotates, and drops pot using claw + box system
-8. **DONE** – Waits before restarting cycle
+1. **CUP_DISPENSE** – Dispense a pot  
+2. **CONVEYOR1** – Move pot to filling station  
+3. **SAUCE_DISPENSE** – Fill pot with sauce  
+4. **CONVEYOR2** – Move to lid sealing station  
+5. **LID_SEAL** – Apply lid using vertical press + rotation  
+6. **CONVEYOR3** – Move to pot release station  
+7. **POT_RELEASE** – Lift, rotate, and drop pot using claws & box  
+8. **DONE** – Wait before restarting cycle  
 
-Each stage is non-blocking and uses real-time motor updates through `motor.run()`.
+Each stage is **non-blocking**, allowing smooth simultaneous motor updates.
 
 ---
 
 ## 🛠️ Requirements
 
-- **Arduino Mega 2560** (recommended for pin count)
-- **AccelStepper Library** (install via Arduino Library Manager)
-- **External motor power supply** (for reliable torque)
-- 10x 28BYJ-48 stepper motors with ULN2003 or A4988 drivers
+- **Arduino Mega 2560** (high pin count for multiple motors)  
+- **AccelStepper Library** (install via Arduino Library Manager)  
+- **External motor power supply** for stable torque  
+- 10× 28BYJ-48 stepper motors (ULN2003 or A4988 drivers)  
 
 ---
 
 ## 📁 File Contents
 
-- `sauce_dispenser_v3.ino` — Full control code (as seen in this 
+- `sauce_dispenser_v3.ino` — Full Arduino code for single-pot operation  
+- Configuration and motor setup embedded in code  
+
+---
 
 ## 📸 Media (Coming Soon)
 
-- Prototype photos
-- System demo video
-- Design sketches and diagrams
+- Prototype photos  
+- Demo video  
+- Design sketches and diagrams  
 
 ---
 
@@ -75,18 +80,21 @@ Each stage is non-blocking and uses real-time motor updates through `motor.run()
 **Josh Bowley**  
 Physics Undergraduate, University of Exeter  
 Arthur Clements Engineering Scholar, Summer 2025  
-Collaborator: [Josh Rafnson-Hall](https://www.linkedin.com/in/joshua-rafnson-hall-974ba2323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)
+
+Collaborator: [Josh Rafnson-Hall](https://www.linkedin.com/in/joshua-rafnson-hall-974ba2323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)  
 
 ---
 
 ## 🏆 Acknowledgements
 
-- **Knowle Fish and Chip Shop** — for inspiration, feedback, and real-world insights
-- **University of Bath** — Arthur Clements Fund
-- **University of Exeter** — for academic support and resources
+- **Knowle Fish and Chip Shop** — inspiration, feedback, and real-world insights  
+- **University of Bath** — Arthur Clements Fund  
+- **University of Exeter** — academic support and resources  
 
 ---
 
 ## 🧵 Related Hashtags
+
+#Arduino #StepperMotors #Automation #Engineering #EmbeddedSystems #CPlusPlus #MakerProject #FoodTech #MechanicalEngineering
 
 > #Arduino #EmbeddedSystems #MotorControl #Automation #Cplusplus #AccelStepper #Mechatronics #EngineeringProject #UniversityOfExeter #UniversityOfBath #KnowleFishAndChips
