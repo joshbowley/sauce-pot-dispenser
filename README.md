@@ -26,14 +26,11 @@ The system uses **C++ on an Arduino Mega** with the **AccelStepper library** for
 
 ---
 
-## 🧠 Key Features
-
-- **Modular state machine architecture** for clear, maintainable sequencing
-- **Real-time motor coordination**, including torque-matched lifting for pot release (M8 & M10)
-- **Serial debug output** for monitoring every step
-- **Customizable motion sequences** with adjustable timing
-- Supports **10 stepper motors** with independent control
-
+## Key Features
+- **Automated Filling:** Dispenses sauce into pots using a conveyor system and multiple stepper motors.  
+- **Multi-Motor Control:** Arduino Mega coordinates 10 stepper motors for conveyor, cup dispensing, sauce dispensing, lid sealing, and pot release.  
+- **Scalable Architecture:** Non-blocking state machine for synchronised motor operation.  
+- **Client-Focused Design:** Developed based on operational requirements of a real business.  
 ---
 
 ## 🚦 Machine Sequence
@@ -48,6 +45,19 @@ The system uses **C++ on an Arduino Mega** with the **AccelStepper library** for
 8. **DONE** – Wait before restarting cycle  
 
 Each stage is **non-blocking**, allowing smooth simultaneous motor updates.
+
+---
+
+## Project Structure
+sauce-pot-dispenser/
+├── individual-machines/ # Code for each subsystem
+│ ├── conveyor/
+│ ├── cup_dispenser/
+│ └── sauce_dispenser/
+├── single-loop/ # Integrated system code
+├── libraries/ # Custom libraries used for control and motor management
+├── schematics/ # Wiring diagrams and electrical layouts
+└── media/ # Photos, videos, and visual documentation
 
 ---
 
