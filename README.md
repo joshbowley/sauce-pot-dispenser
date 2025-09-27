@@ -48,19 +48,6 @@ Each stage is **non-blocking**, allowing smooth simultaneous motor updates.
 
 ---
 
-## Project Structure
-sauce-pot-dispenser/
-├── individual-machines/ # Code for each subsystem
-│ ├── conveyor/
-│ ├── cup_dispenser/
-│ └── sauce_dispenser/
-├── single-loop/ # Integrated system code
-├── libraries/ # Custom libraries used for control and motor management
-├── schematics/ # Wiring diagrams and electrical layouts
-└── media/ # Photos, videos, and visual documentation
-
----
-
 ## 🛠️ Requirements
 
 - **Arduino Mega 2560** (high pin count for multiple motors)  
