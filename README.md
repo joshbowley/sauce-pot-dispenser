@@ -1,94 +1,78 @@
-# 🥫 Sauce Pot Dispenser – Arduino Control System
+# Sauce Pot Dispenser – Arduino Control System
 
-This repository contains the **full Arduino control code** for a **multi-stepper motor sauce pot dispenser**, developed as part of the **Arthur Clements Engineering Scholarship** project in Summer 2025.
+This repository contains the full Arduino control code for a multi-stepper motor sauce pot dispensing system, developed as part of the Arthur Clements Engineering Scholarship (Summer 2025).
 
-The system was designed to **automate the preparation of free sauce pots** at **Knowle Fish and Chip Shop**, which were previously filled manually. Automating this process reduces staff workload during peak hours, improves customer service efficiency, and maintains consistent portion control.
+The machine was designed for Knowle Fish and Chip Shop to automate the preparation of free sauce pots, replacing a previously manual process. Automation reduces staff workload during busy periods, improves consistency, and increases throughput.
 
----
+## System Overview
 
-## 🔧 System Overview
+The system coordinates ten stepper motors using an Arduino Mega and the AccelStepper library. Each motor performs a specific mechanical function within the overall workflow:
 
-The machine coordinates **10 stepper motors** (M1–M10), each handling a specific stage of pot preparation and delivery:
+| Motor | Function |
+|-------|----------|
+| M1    | Cup dispenser |
+| M2    | Conveyor belt (three stages) |
+| M3–M4 | Sauce dispenser (fill and retract) |
+| M5    | Lid sealer – vertical press |
+| M6    | Lid sealer – rotation |
+| M7    | Pot release claws – open/close |
+| M8    | Pot release claws – lift/lower |
+| M9    | Release box rotation |
+| M10   | Pot release claws – synchronised movement |
 
-| Motor | Function                           |
-|-------|------------------------------------|
-| M1    | Cup Dispenser                      |
-| M2    | Conveyor Belt (3 stages)           |
-| M3–M4 | Sauce Dispenser (fill & retract)  |
-| M5    | Lid Sealer (vertical press)        |
-| M6    | Lid Sealer (rotation)              |
-| M7    | Pot Release Claws (open/close)     |
-| M8    | Pot Release Claws (lift/lower)     |
-| M9    | Release Box Rotation               |
-| M10   | Pot Release Claws (sync with M8)   |
-
-The system uses **C++ on an Arduino Mega** with the **AccelStepper library** for precise, non-blocking motor control.
-
----
+The control architecture is built around a non-blocking state machine, allowing multiple motors to be updated simultaneously without delays.
 
 ## Key Features
-- **Automated Filling:** Dispenses sauce into pots using a conveyor system and multiple stepper motors.  
-- **Multi-Motor Control:** Arduino Mega coordinates 10 stepper motors for conveyor, cup dispensing, sauce dispensing, lid sealing, and pot release.  
-- **Scalable Architecture:** Non-blocking state machine for synchronised motor operation.  
-- **Client-Focused Design:** Developed based on operational requirements of a real business.  
----
 
-## 🚦 Machine Sequence
+- Automated multi-stage dispensing, filling, sealing and release  
+- Arduino Mega controlling ten stepper motors  
+- AccelStepper for precise, non-blocking motor movement  
+- Structured state machine for predictable, repeatable operation  
+- Developed to meet real operational requirements in a commercial environment  
 
-1. **CUP_DISPENSE** – Dispense a pot  
-2. **CONVEYOR1** – Move pot to filling station  
-3. **SAUCE_DISPENSE** – Fill pot with sauce  
-4. **CONVEYOR2** – Move to lid sealing station  
-5. **LID_SEAL** – Apply lid using vertical press + rotation  
-6. **CONVEYOR3** – Move to pot release station  
-7. **POT_RELEASE** – Lift, rotate, and drop pot using claws & box  
-8. **DONE** – Wait before restarting cycle  
+## Machine Sequence
 
-Each stage is **non-blocking**, allowing smooth simultaneous motor updates.
+1. CUP_DISPENSE – dispense an empty pot  
+2. CONVEYOR1 – move pot to filling station  
+3. SAUCE_DISPENSE – fill pot with sauce  
+4. CONVEYOR2 – move to lid sealing station  
+5. LID_SEAL – apply lid using press and rotation  
+6. CONVEYOR3 – move to release station  
+7. POT_RELEASE – lift, rotate and drop the pot  
+8. DONE – wait before restarting the cycle  
 
----
+All stages run without blocking calls, allowing smooth, continuous motor control.
 
-## 🛠️ Requirements
+## Requirements
 
-- **Arduino Mega 2560** (high pin count for multiple motors)  
-- **AccelStepper Library** (install via Arduino Library Manager)  
-- **External motor power supply** for stable torque  
-- 10× 28BYJ-48 stepper motors (ULN2003 or A4988 drivers)  
+- Arduino Mega 2560  
+- AccelStepper library  
+- External motor power supply  
+- Ten 28BYJ-48 stepper motors (ULN2003 or A4988 drivers depending on configuration)  
 
----
+## File Contents
 
-## 📁 File Contents
+- sauce_dispenser_v3.ino – full Arduino control program  
+- Configuration parameters and motor assignments included within the code  
 
-- `sauce_dispenser_v3.ino` — Full Arduino code for single-pot operation  
-- Configuration and motor setup embedded in code  
+## Media
 
----
+Prototype photos, design sketches and demonstration videos will be added in a future update.
 
-## 📸 Media (Coming Soon)
+## Developed By
 
-- Prototype photos  
-- Demo video  
-- Design sketches and diagrams  
-
----
-
-## 👷‍♂️ Developed By
-
-**Josh Bowley**  
+Josh Bowley  
 Physics Undergraduate, University of Exeter  
-Arthur Clements Engineering Scholar, Summer 2025  
+Arthur Clements Engineering Scholar 2025
 
-Collaborator: [Josh Rafnson-Hall](https://www.linkedin.com/in/joshua-rafnson-hall-974ba2323?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app)  
+Collaborator: Josh Rafnson-Hall
 
----
+## Acknowledgements
 
-## 🏆 Acknowledgements
+- Knowle Fish and Chip Shop  
+- Arthur Clements Engineering Scholarship, University of Bath  
+- University of Exeter
 
-- **Knowle Fish and Chip Shop** — inspiration, feedback, and real-world insights  
-- **University of Bath** — Arthur Clements Fund  
-- **University of Exeter** — academic support and resources  
-
----
 
 ## 🧵 Related Hashtags
 
